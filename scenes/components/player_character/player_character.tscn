@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://b3246q6xinb25"]
+
+[ext_resource type="Texture2D" uid="uid://shyupnpbpai" path="res://assets/images/frog/frog_idle_1.png" id="1_474xm"]
+[ext_resource type="Script" uid="uid://da1h4jnbpevnt" path="res://scenes/components/player_character/player_character.gd" id="1_buyix"]
+[ext_resource type="Texture2D" uid="uid://b3sc5q0b1sa6p" path="res://assets/images/frog/frog_idle_2.png" id="2_buyix"]
+[ext_resource type="Texture2D" uid="uid://cn54in8avi8w5" path="res://assets/images/frog/frog_jump1.png" id="3_asoth"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g0gwt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_474xm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_buyix")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_asoth")
+}],
+"loop": 1,
+"name": &"jump",
+"speed": 5.0
+}]
+
+[node name="PlayerCharacter" type="Area2D" unique_id=671612842]
+script = ExtResource("1_buyix")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=686999115]
+sprite_frames = SubResource("SpriteFrames_g0gwt")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="." unique_id=236957465]
+polygon = PackedVector2Array(-5, 2, -4, 2, -4, 1, -3, 1, -3, 0, 5, 0, 5, 2, 6, 2, 6, 6, -5, 6)

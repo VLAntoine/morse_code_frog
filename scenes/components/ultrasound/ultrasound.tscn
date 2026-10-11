@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dpsauo23m4m24"]
+
+[ext_resource type="Script" uid="uid://b4wp2xy4ojm05" path="res://scenes/components/ultrasound/ultrasound.gd" id="1_h4te6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g0gwt"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="Ultrasound" type="Control" unique_id=425123000]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_h4te6")
+
+[node name="Panel" type="Panel" parent="." unique_id=534604016]
+custom_minimum_size = Vector2(200, 32)
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 32.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_g0gwt")
+
+[node name="DurationTimer" type="Timer" parent="." unique_id=901339916]
+autostart = true

@@ -9,6 +9,9 @@ func _ready() -> void:
 	
 	player_data = PlayerData.new()
 
+func set_player_init_position(cell: Vector2i):
+	player_data.cell_position = cell
+
 func _on_input_set(ultrasound_input: UltrasoundData.InputValue):
 	match ultrasound_input:
 		UltrasoundData.InputValue.UP:

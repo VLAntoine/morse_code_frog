@@ -13,9 +13,14 @@ var ultrasound_data: UltrasoundData
 var panels: Array[Panel] = []
 var dot_panel: Panel
 
+var ultrasound_style: StyleBoxFlat = load("res://assets/styles/ultrasound_style.tres")
+var ultrasound_gradient: Gradient = load("res://assets/styles/ultrasound_gradient.tres")
+
 func _ready() -> void:
 	dot_panel = Panel.new()
 	add_child(dot_panel)
+	dot_panel.add_theme_stylebox_override("panel", ultrasound_style)
+	dot_panel.self_modulate = Color.BLACK
 	dot_panel.size = Vector2(OFF_HEIGHT,OFF_HEIGHT)
 	dot_panel.position = Vector2(0,7)
 
@@ -44,6 +49,8 @@ func _process(delta: float) -> void:
 func _on_ultrasound_started() -> void:
 	var panel := Panel.new()
 	add_child(panel)
+	panel.add_theme_stylebox_override("panel", ultrasound_style)
+	panel.self_modulate = ultrasound_gradient.sample(0.0)
 	panel.position.x = dot_panel.position.x
 	panel.size.y = ON_HEIGHT
 	panel.size.x = 0
@@ -51,6 +58,7 @@ func _on_ultrasound_started() -> void:
 
 func _on_last_wave_length_changed() -> void:
 	panels[-1].size.x = (ultrasound_data.waves_len_1[-1]) * DOT_SPEED + OFF_HEIGHT
+	panels[-1].self_modulate = ultrasound_gradient.sample(ultrasound_data.waves_len_1[-1]/ultrasound_data.DASH_DURATION)
 
 func _on_wave_length_cleared() -> void:
 	for p in panels:

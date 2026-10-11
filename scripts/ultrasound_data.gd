@@ -19,8 +19,8 @@ enum InputValue{
 	ERROR
 }
 
-const DURATION := 0.8
-const DASH_RATIO := 0.2
+const DASH_DURATION := 0.2
+const OFF_DURATION := 0.2
 
 var progress := 0.0
 
@@ -28,6 +28,8 @@ var action_pressed := false
 
 var waves_len_1: Array[float] = []
 
+func is_new_ultrasound() -> bool:
+	return len(waves_len_1) == 0
 
 func start_wave() -> void:
 	waves_len_1.append(0.0)
@@ -35,8 +37,9 @@ func start_wave() -> void:
 	ultrasound_started.emit()
 
 func update_last_wave(delta: float) -> void:
-	waves_len_1[-1] += delta
-	last_wave_length_changed.emit()
+	if len(waves_len_1) > 0:
+		waves_len_1[-1] += delta
+		last_wave_length_changed.emit()
 
 func stop_wave() -> void:
 	action_pressed = false
@@ -44,7 +47,7 @@ func stop_wave() -> void:
 func get_morse_sequence() -> Array[MorseValue]:
 	var morse_sequence: Array[MorseValue] = []
 	for wave in waves_len_1:
-		if wave > DASH_RATIO * DURATION:
+		if wave > DASH_DURATION:
 			morse_sequence.append(MorseValue.DASH)
 		else:
 			morse_sequence.append(MorseValue.DOT)

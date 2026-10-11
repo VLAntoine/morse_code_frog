@@ -17,5 +17,5 @@ offset_right = 200.0
 offset_bottom = 32.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_g0gwt")
 
-[node name="DurationTimer" type="Timer" parent="." unique_id=901339916]
-autostart = true
+[node name="OffTimer" type="Timer" parent="." unique_id=901339916]
+one_shot = true

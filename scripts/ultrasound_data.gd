@@ -19,8 +19,8 @@ enum InputValue{
 	ERROR
 }
 
-const DASH_DURATION := 0.12
-const OFF_DURATION := 0.12
+const DASH_DURATION := 0.15
+const OFF_DURATION := 0.15
 
 var progress := 0.0
 

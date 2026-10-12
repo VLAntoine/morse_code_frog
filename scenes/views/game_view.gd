@@ -13,6 +13,8 @@ func _ready() -> void:
 			GameManager.set_goal_cell(c)
 		elif level.get_cell_tile_data(c).get_custom_data("wall"):
 			GameManager.add_walls_cell(c)
+		elif level.get_cell_tile_data(c).get_custom_data("hole"):
+			GameManager.add_holes_cell(c)
 	
 	player_character.setup()
 	ultrasound.setup(GameManager.ultrasound_data)

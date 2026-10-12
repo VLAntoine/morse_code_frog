@@ -6,6 +6,7 @@ enum PlayerState{
 }
 
 const JUMP_DURATION := 0.2
+const FALL_DURATION := 1.0
 
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var collision_shape = $CollisionShape2D
@@ -24,6 +25,7 @@ func setup():
 	set_player_position()
 	GameManager.player_move_failed.connect(_on_player_move_failed)
 	GameManager.player_position_changed.connect(_on_player_position_changed)
+	GameManager.player_fallen.connect(_on_player_fallen)
 
 func _ready() -> void:
 	animated_sprite.animation = "idle"
@@ -40,6 +42,8 @@ func set_state(s: PlayerState) -> void:
 
 func set_player_position() -> void:
 	position = get_global_cell_position(GameManager.player_position)
+	animated_sprite.scale = Vector2(1.0,1.0)
+	animated_sprite.rotation_degrees = 0
 
 func get_global_cell_position(cell: Vector2i) -> Vector2:
 	return cell*16 + Vector2i(8,2)
@@ -55,6 +59,13 @@ func _on_player_move_failed(next_cell: Vector2i) -> void:
 	set_state(PlayerState.JUMP)
 	await fail(next_pos)
 	set_state(PlayerState.IDLE)
+
+func _on_player_fallen(next_pos: Vector2i) -> void:
+	set_state(PlayerState.JUMP)
+	await move(get_global_cell_position(next_pos))
+	set_state(PlayerState.IDLE)
+	await fall()
+	GameManager.init_player_position()
 	
 func move(next_position: Vector2) -> void:
 	var tween = create_tween()
@@ -71,3 +82,12 @@ func fail(next_pos: Vector2) -> void:
 	tween.tween_property(self,"position",mid_pos,JUMP_DURATION/2)
 	tween.tween_property(self,"position",player_pos,JUMP_DURATION/2)
 	await tween.finished
+
+func fall():
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	tween.set_parallel()
+	tween.tween_property(animated_sprite,"rotation_degrees",360,FALL_DURATION)
+	tween.tween_property(animated_sprite,"scale",Vector2(0,0),FALL_DURATION)
+	await tween.finished
+	

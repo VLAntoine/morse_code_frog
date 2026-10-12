@@ -2,19 +2,29 @@
 
 [ext_resource type="Script" uid="uid://n2beuc5837j1" path="res://scenes/views/game_view.gd" id="1_vhh0i"]
 [ext_resource type="PackedScene" uid="uid://b3246q6xinb25" path="res://scenes/components/player_character/player_character.tscn" id="2_dmcxv"]
-[ext_resource type="PackedScene" uid="uid://cbh1i3w5yj62x" path="res://scenes/components/levels/level_1.tscn" id="2_ng05d"]
 [ext_resource type="PackedScene" uid="uid://dpsauo23m4m24" path="res://scenes/components/ultrasound/ultrasound.tscn" id="3_dmcxv"]
 
 [node name="GameView" type="Node2D" unique_id=1597344507]
 script = ExtResource("1_vhh0i")
 
-[node name="Level1" parent="." unique_id=693377413 instance=ExtResource("2_ng05d")]
+[node name="PlayScreenControl" type="Control" parent="." unique_id=52525726]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="LevelControl" type="Control" parent="PlayScreenControl" unique_id=542945722]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PlayerCharacter" parent="PlayScreenControl" unique_id=671612842 instance=ExtResource("2_dmcxv")]
+position = Vector2(16, 8)
 
 [node name="Ultrasound" parent="." unique_id=425123000 instance=ExtResource("3_dmcxv")]
-offset_left = 14.0
-offset_top = 125.0
-offset_right = 14.0
-offset_bottom = 125.0
-
-[node name="PlayerCharacter" parent="." unique_id=671612842 instance=ExtResource("2_dmcxv")]
-position = Vector2(24, 16)
+offset_left = 12.0
+offset_top = 141.0
+offset_right = 12.0
+offset_bottom = 141.0

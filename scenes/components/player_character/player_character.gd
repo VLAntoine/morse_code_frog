@@ -7,7 +7,7 @@ enum PlayerState{
 
 const JUMP_DURATION := 0.2
 const FALL_DURATION := 1.0
-const INIT_DURATION := 1.0
+const INIT_DURATION := 2.0
 
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var collision_shape = $CollisionShape2D

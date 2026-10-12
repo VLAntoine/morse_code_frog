@@ -4,6 +4,7 @@ signal player_position_changed
 signal player_move_failed
 signal player_fallen
 signal player_initialized
+signal level_won
 
 var ultrasound_data: UltrasoundData
 
@@ -40,6 +41,10 @@ func add_walls_cell(cell: Vector2i):
 
 func add_holes_cell(cell: Vector2i):
 	holes_cell.append(cell)
+	
+func clear_cells_data():
+	holes_cell = []
+	walls_cell = []
 
 func _on_input_set(ultrasound_input: UltrasoundData.InputValue):
 	var next_pos := player_position
@@ -61,4 +66,5 @@ func _on_input_set(ultrasound_input: UltrasoundData.InputValue):
 	else:
 		player_position = next_pos
 		if player_position == goal_cell:
-			print("WIN")
+			clear_cells_data()
+			level_won.emit()

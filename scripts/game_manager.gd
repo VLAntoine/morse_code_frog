@@ -3,6 +3,7 @@ extends Node
 signal player_position_changed
 signal player_move_failed
 signal player_fallen
+signal player_initialized
 
 var ultrasound_data: UltrasoundData
 
@@ -16,6 +17,7 @@ var player_position: Vector2i:
 		if player_position != new_pos:
 			player_position = new_pos
 			player_position_changed.emit()
+var player_flip := false
 
 func _ready() -> void:
 	ultrasound_data = UltrasoundData.new()
@@ -24,9 +26,11 @@ func _ready() -> void:
 func set_player_init_position(cell: Vector2i):
 	start_cell = cell
 	init_player_position()
-
+	
 func init_player_position():
+	player_flip = false
 	player_position = start_cell
+	player_initialized.emit()
 
 func set_goal_cell(cell: Vector2i):
 	goal_cell = cell
@@ -45,8 +49,10 @@ func _on_input_set(ultrasound_input: UltrasoundData.InputValue):
 		UltrasoundData.InputValue.DOWN:
 			next_pos = player_position + Vector2i(0, 1)
 		UltrasoundData.InputValue.LEFT:
+			player_flip = true
 			next_pos = player_position + Vector2i(-1, 0)
 		UltrasoundData.InputValue.RIGHT:
+			player_flip = false
 			next_pos = player_position + Vector2i(1, 0)
 	if next_pos in walls_cell:
 		player_move_failed.emit(next_pos)

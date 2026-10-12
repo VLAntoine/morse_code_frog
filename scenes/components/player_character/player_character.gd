@@ -7,6 +7,7 @@ enum PlayerState{
 
 const JUMP_DURATION := 0.2
 const FALL_DURATION := 1.0
+const INIT_DURATION := 1.0
 
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var collision_shape = $CollisionShape2D
@@ -26,6 +27,7 @@ func setup():
 	GameManager.player_move_failed.connect(_on_player_move_failed)
 	GameManager.player_position_changed.connect(_on_player_position_changed)
 	GameManager.player_fallen.connect(_on_player_fallen)
+	GameManager.player_initialized.connect(_on_player_initialized)
 
 func _ready() -> void:
 	animated_sprite.animation = "idle"
@@ -42,13 +44,12 @@ func set_state(s: PlayerState) -> void:
 
 func set_player_position() -> void:
 	position = get_global_cell_position(GameManager.player_position)
-	animated_sprite.scale = Vector2(1.0,1.0)
-	animated_sprite.rotation_degrees = 0
 
 func get_global_cell_position(cell: Vector2i) -> Vector2:
 	return cell*16 + Vector2i(8,2)
 
 func _on_player_position_changed() -> void:
+	animated_sprite.flip_h = GameManager.player_flip
 	set_state(PlayerState.JUMP)
 	await move(get_global_cell_position(GameManager.player_position))
 	set_state(PlayerState.IDLE)
@@ -67,6 +68,12 @@ func _on_player_fallen(next_pos: Vector2i) -> void:
 	await fall()
 	GameManager.init_player_position()
 	
+func _on_player_initialized() -> void:
+	animated_sprite.flip_h = GameManager.player_flip
+	set_player_position()
+	animated_sprite.rotation_degrees = 0
+	await init_player()
+	
 func move(next_position: Vector2) -> void:
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
@@ -83,11 +90,16 @@ func fail(next_pos: Vector2) -> void:
 	tween.tween_property(self,"position",player_pos,JUMP_DURATION/2)
 	await tween.finished
 
-func fall():
+func fall() -> void:
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	tween.set_parallel()
 	tween.tween_property(animated_sprite,"rotation_degrees",360,FALL_DURATION)
 	tween.tween_property(animated_sprite,"scale",Vector2(0,0),FALL_DURATION)
 	await tween.finished
-	
+
+func init_player() -> void:
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(animated_sprite,"scale",Vector2(1,1),INIT_DURATION)
+	await tween.finished

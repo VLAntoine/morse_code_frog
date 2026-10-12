@@ -27,12 +27,16 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="PlayerCharacter" type="Area2D" unique_id=671612842]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h24yo"]
+size = Vector2(11, 5)
+
+[node name="PlayerCharacter" type="CharacterBody2D" unique_id=2066128196]
 script = ExtResource("1_buyix")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=686999115]
 sprite_frames = SubResource("SpriteFrames_g0gwt")
 animation = &"idle"
 
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="." unique_id=236957465]
-polygon = PackedVector2Array(-5, 2, -4, 2, -4, 1, -3, 1, -3, 0, 5, 0, 5, 2, 6, 2, 6, 6, -5, 6)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=465660681]
+position = Vector2(0.5, 4.5)
+shape = SubResource("RectangleShape2D_h24yo")

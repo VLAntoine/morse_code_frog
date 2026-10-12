@@ -9,8 +9,10 @@ func _ready() -> void:
 	for c in cells:
 		if level.get_cell_tile_data(c).get_custom_data("start"):
 			GameManager.set_player_init_position(c)
-			break
+		elif level.get_cell_tile_data(c).get_custom_data("end"):
+			GameManager.set_goal_cell(c)
+		elif level.get_cell_tile_data(c).get_custom_data("wall"):
+			GameManager.add_walls_cell(c)
 	
-	player_character.setup(GameManager.player_data)
-	
+	player_character.setup()
 	ultrasound.setup(GameManager.ultrasound_data)

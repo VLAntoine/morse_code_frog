@@ -1,21 +1,29 @@
-extends Area2D
+extends CharacterBody2D
 
 enum PlayerState{
 	IDLE,
 	JUMP
 }
 
-const JUMP_DURATION := 0.1 
+const JUMP_DURATION := 0.2
 
 @onready var animated_sprite = $AnimatedSprite2D
+@onready var collision_shape = $CollisionShape2D
 
-var player_data: PlayerData
-var state:= PlayerState.IDLE
+var state:= PlayerState.IDLE:
+	set(new_s):
+		if new_s != state:
+			state = new_s
+			match new_s:
+				PlayerState.IDLE:
+					collision_shape.position.y = 4.5
+				PlayerState.JUMP:
+					collision_shape.position.y = -0.5
 
-func setup(p_data: PlayerData):
-	player_data = p_data
+func setup():
 	set_player_position()
-	player_data.position_changed.connect(_on_position_changed)
+	GameManager.player_move_failed.connect(_on_player_move_failed)
+	GameManager.player_position_changed.connect(_on_player_position_changed)
 
 func _ready() -> void:
 	animated_sprite.animation = "idle"
@@ -31,19 +39,35 @@ func set_state(s: PlayerState) -> void:
 				animated_sprite.play("jump")
 
 func set_player_position() -> void:
-	position = get_player_position()
+	position = get_global_cell_position(GameManager.player_position)
 
-func get_player_position() -> Vector2:
-	return player_data.cell_position * 16 + Vector2(8,2)
+func get_global_cell_position(cell: Vector2i) -> Vector2:
+	return cell*16 + Vector2i(8,2)
 
-func _on_position_changed() -> void:
+func _on_player_position_changed() -> void:
 	set_state(PlayerState.JUMP)
-	await move(get_player_position())
+	await move(get_global_cell_position(GameManager.player_position))
 	set_state(PlayerState.IDLE)
 	set_player_position()
+
+func _on_player_move_failed(next_cell: Vector2i) -> void:
+	var next_pos := get_global_cell_position(next_cell)
+	set_state(PlayerState.JUMP)
+	await fail(next_pos)
+	set_state(PlayerState.IDLE)
 	
 func move(next_position: Vector2) -> void:
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 	tween.tween_property(self,"position",next_position,JUMP_DURATION)
+	await tween.finished
+
+func fail(next_pos: Vector2) -> void:
+	var player_pos := get_global_cell_position(GameManager.player_position)
+	var mid_pos := (next_pos + player_pos) / 2
+	
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(self,"position",mid_pos,JUMP_DURATION/2)
+	tween.tween_property(self,"position",player_pos,JUMP_DURATION/2)
 	await tween.finished

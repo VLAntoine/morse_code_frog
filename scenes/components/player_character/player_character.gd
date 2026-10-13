@@ -10,22 +10,13 @@ const FALL_DURATION := 1.0
 const INIT_DURATION := 2.0
 
 @onready var animated_sprite = $AnimatedSprite2D
-@onready var collision_shape = $CollisionShape2D
 
-var state:= PlayerState.IDLE:
-	set(new_s):
-		if new_s != state:
-			state = new_s
-			match new_s:
-				PlayerState.IDLE:
-					collision_shape.position.y = 4.5
-				PlayerState.JUMP:
-					collision_shape.position.y = -0.5
+var state:= PlayerState.IDLE
 
 func setup():
 	set_player_position()
 	GameManager.player_move_failed.connect(_on_player_move_failed)
-	GameManager.player_position_changed.connect(_on_player_position_changed)
+	GameManager.player_move_succeeded.connect(_on_player_move_succeeded)
 	GameManager.player_fallen.connect(_on_player_fallen)
 	GameManager.player_initialized.connect(_on_player_initialized)
 
@@ -48,14 +39,16 @@ func set_player_position() -> void:
 func get_global_cell_position(cell: Vector2i) -> Vector2:
 	return cell*16 + Vector2i(8,2)
 
-func _on_player_position_changed() -> void:
+func _on_player_move_succeeded(next_cell:Vector2i) -> void:
 	animated_sprite.flip_h = GameManager.player_flip
+	var next_pos := get_global_cell_position(next_cell)
 	set_state(PlayerState.JUMP)
-	await move(get_global_cell_position(GameManager.player_position))
+	await move(next_pos)
 	set_state(PlayerState.IDLE)
 	set_player_position()
 
 func _on_player_move_failed(next_cell: Vector2i) -> void:
+	animated_sprite.flip_h = GameManager.player_flip
 	var next_pos := get_global_cell_position(next_cell)
 	set_state(PlayerState.JUMP)
 	await fail(next_pos)

@@ -1,6 +1,6 @@
 extends Node
 
-signal player_position_changed
+signal player_move_succeeded
 signal player_move_failed
 signal player_fallen
 signal player_initialized
@@ -15,11 +15,7 @@ var goal_cell: Vector2i
 var walls_cell: Array[Vector2i]
 var holes_cell: Array[Vector2i]
 
-var player_position: Vector2i:
-	set(new_pos):
-		if player_position != new_pos:
-			player_position = new_pos
-			player_position_changed.emit()
+var player_position: Vector2i
 var player_flip := false
 
 func _ready() -> void:
@@ -65,17 +61,40 @@ func _on_input_set(ultrasound_inputs: Array[INPUT_ENUM]):
 				move += Vector2i(1, 0)
 	if move.x < 0:
 		player_flip = true
-	elif move.y > 0:
+	elif move.x > 0:
 		player_flip = false
 	
+	emit_move(move)
+
+func emit_move(move: Vector2i) -> void:
 	var next_pos := player_position + move
 	
-	if next_pos in walls_cell:
-		player_move_failed.emit(next_pos)
-	elif next_pos in holes_cell:
-		player_fallen.emit(next_pos)
+	if move.length() < 2:
+		if next_pos in walls_cell:
+			player_move_failed.emit(next_pos)
+		elif next_pos in holes_cell:
+			player_fallen.emit(next_pos)
+		else:
+			player_move_succeeded.emit(next_pos)
+			player_position = next_pos
+			if player_position == goal_cell:
+				clear_cells_data()
+				level_won.emit()
 	else:
-		player_position = next_pos
-		if player_position == goal_cell:
-			clear_cells_data()
-			level_won.emit()
+		@warning_ignore("integer_division")
+		var mid_pos := player_position + move/2
+		if mid_pos in walls_cell:
+			player_move_failed.emit(next_pos)
+		elif next_pos in walls_cell:
+			player_position = mid_pos
+			player_move_failed.emit(next_pos)
+			if mid_pos in holes_cell:
+				player_fallen.emit(mid_pos)
+		elif next_pos in holes_cell:
+			player_fallen.emit(next_pos)
+		else:
+			player_move_succeeded.emit(next_pos)
+			player_position = next_pos
+			if player_position == goal_cell:
+				clear_cells_data()
+				level_won.emit()

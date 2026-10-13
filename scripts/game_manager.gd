@@ -6,6 +6,8 @@ signal player_fallen
 signal player_initialized
 signal level_won
 
+const INPUT_ENUM = USignalData.InputValue
+
 var ultrasound_data: UltrasoundData
 
 var start_cell: Vector2i
@@ -23,6 +25,7 @@ var player_flip := false
 func _ready() -> void:
 	ultrasound_data = UltrasoundData.new()
 	ultrasound_data.input_set.connect(_on_input_set)
+	ultrasound_data.setup()
 
 func set_player_init_position(cell: Vector2i):
 	start_cell = cell
@@ -46,19 +49,27 @@ func clear_cells_data():
 	holes_cell = []
 	walls_cell = []
 
-func _on_input_set(ultrasound_input: UltrasoundData.InputValue):
-	var next_pos := player_position
-	match ultrasound_input:
-		UltrasoundData.InputValue.UP:
-			next_pos = player_position + Vector2i(0, -1)
-		UltrasoundData.InputValue.DOWN:
-			next_pos = player_position + Vector2i(0, 1)
-		UltrasoundData.InputValue.LEFT:
-			player_flip = true
-			next_pos = player_position + Vector2i(-1, 0)
-		UltrasoundData.InputValue.RIGHT:
-			player_flip = false
-			next_pos = player_position + Vector2i(1, 0)
+func _on_input_set(ultrasound_inputs: Array[INPUT_ENUM]):
+	var move := Vector2i(0,0)
+	for inpt in ultrasound_inputs:
+		match inpt:
+			INPUT_ENUM.UP:
+				move += Vector2i(0, -1)
+			INPUT_ENUM.DOWN:
+				move += Vector2i(0, 1)
+			INPUT_ENUM.LEFT:
+				player_flip = true
+				move += Vector2i(-1, 0)
+			INPUT_ENUM.RIGHT:
+				player_flip = false
+				move += Vector2i(1, 0)
+	if move.x < 0:
+		player_flip = true
+	elif move.y > 0:
+		player_flip = false
+	
+	var next_pos := player_position + move
+	
 	if next_pos in walls_cell:
 		player_move_failed.emit(next_pos)
 	elif next_pos in holes_cell:

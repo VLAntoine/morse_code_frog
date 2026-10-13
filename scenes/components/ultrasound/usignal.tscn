@@ -3,11 +3,7 @@
 [ext_resource type="Script" uid="uid://cunou8i8kh67h" path="res://scenes/components/ultrasound/usignal.gd" id="1_0jhqd"]
 
 [node name="Usignal" type="Control" unique_id=94619172]
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_0jhqd")
-
-[node name="OffTimer" type="Timer" parent="." unique_id=650423606]
-one_shot = true
-
-[connection signal="timeout" from="OffTimer" to="." method="_on_off_timer_timeout"]

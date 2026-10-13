@@ -4,7 +4,6 @@ signal wave_started
 signal last_wave_changed
 signal wave_stopped
 signal waves_cleared
-signal timeout_reached
 
 enum MorseValue {
 	DOT,
@@ -20,20 +19,15 @@ enum InputValue{
 }
 
 const DASH_DURATION := 0.15
-const OFF_DURATION := 0.15
 
 var waves: Array[float] = []
 var ultrasound_started := false
-
-var timeout := false:
-	set(new_t):
-		if timeout != new_t:
-			timeout = new_t
-			timeout_reached.emit()
+var running := false
 
 func start_wave() -> void:
 	waves.append(0.0)
 	ultrasound_started = true
+	running = true
 	wave_started.emit()
 
 func update_last_wave(delta: float) -> void:
@@ -42,6 +36,7 @@ func update_last_wave(delta: float) -> void:
 		last_wave_changed.emit()
 
 func stop_wave() -> void:
+	running = false
 	wave_stopped.emit()
 
 func get_morse_sequence() -> Array[MorseValue]:
@@ -71,6 +66,5 @@ func get_input_value() -> InputValue :
 func clear_wave() -> void:
 	waves.clear()
 	ultrasound_started = false
-	timeout = false
 	waves_cleared.emit()
  

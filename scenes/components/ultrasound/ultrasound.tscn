@@ -22,7 +22,9 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_g0gwt")
 [node name="OffTimer" type="Timer" parent="." unique_id=901339916]
 one_shot = true
 
-[node name="USignalControl" type="Control" parent="." unique_id=2015429500]
-anchors_preset = 0
+[node name="USignalControl" type="VBoxContainer" parent="." unique_id=583946048]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[connection signal="timeout" from="OffTimer" to="." method="_on_off_timer_timeout"]

@@ -3,8 +3,11 @@
 [ext_resource type="Script" uid="uid://b4wp2xy4ojm05" path="res://scenes/components/ultrasound/ultrasound.gd" id="1_h4te6"]
 [ext_resource type="PackedScene" uid="uid://cp5c343yt3hlq" path="res://scenes/components/ultrasound/usignal.tscn" id="2_a6mbk"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g0gwt"]
-bg_color = Color(1, 1, 1, 1)
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_a6mbk"]
+load_path = "res://.godot/imported/oscilloscope.png-cff06240b138f29f3d497a092005479a.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ga4hc"]
+texture = SubResource("CompressedTexture2D_a6mbk")
 
 [node name="Ultrasound" type="Control" unique_id=425123000]
 layout_mode = 3
@@ -15,9 +18,9 @@ usignal_scene = ExtResource("2_a6mbk")
 [node name="Panel" type="Panel" parent="." unique_id=534604016]
 custom_minimum_size = Vector2(200, 32)
 layout_mode = 0
-offset_right = 200.0
+offset_right = 208.0
 offset_bottom = 32.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_g0gwt")
+theme_override_styles/panel = SubResource("StyleBoxTexture_ga4hc")
 
 [node name="OffTimer" type="Timer" parent="." unique_id=901339916]
 one_shot = true

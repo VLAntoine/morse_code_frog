@@ -2,7 +2,7 @@ extends Control
 
 @export var usignal_scene: PackedScene
 
-const OFF_DURATION := 0.15
+const OFF_DURATION := 0.2
 
 @onready var u_signal_control = $USignalControl
 @onready var off_timer = $OffTimer
@@ -21,6 +21,7 @@ func setup(us_data: UltrasoundData) -> void:
 		var us_node = usignal_scene.instantiate()
 		u_signal_control.add_child(us_node)
 		us_node.setup(usignal_data)
+		us_node.end_oscilloscope_reached.connect(_on_end_oscilloscope_reached)
 
 func _process(delta: float) -> void:
 	for i in u_signal_control.get_child_count():
@@ -28,11 +29,15 @@ func _process(delta: float) -> void:
 		if Input.is_action_just_pressed(action_name):
 			off_timer.stop()
 			ultrasound_data.start_wave(i)
-		elif Input.is_action_pressed(action_name):
+		elif Input.is_action_pressed(action_name) && ultrasound_data.usignals_data[i].running:
 			ultrasound_data.update_last_wave(i, delta)
 		elif Input.is_action_just_released(action_name):
 			ultrasound_data.stop_wave(i)
 			start_off_timer()
+
+func _on_end_oscilloscope_reached() -> void:
+	off_timer.stop()
+	_on_off_timer_timeout()
 
 func start_off_timer() -> void:
 	var is_started := true

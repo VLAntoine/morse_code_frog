@@ -18,7 +18,7 @@ enum InputValue{
 	ERROR
 }
 
-const DASH_DURATION := 0.15
+const DASH_DURATION := 0.2
 
 var waves: Array[float] = []
 var ultrasound_started := false

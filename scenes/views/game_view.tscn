@@ -3,10 +3,7 @@
 [ext_resource type="Script" uid="uid://n2beuc5837j1" path="res://scenes/views/game_view.gd" id="1_vhh0i"]
 [ext_resource type="PackedScene" uid="uid://b3246q6xinb25" path="res://scenes/components/player_character/player_character.tscn" id="2_dmcxv"]
 [ext_resource type="PackedScene" uid="uid://dpsauo23m4m24" path="res://scenes/components/ultrasound/ultrasound.tscn" id="3_dmcxv"]
-[ext_resource type="Texture2D" uid="uid://infmpogy4cse" path="res://assets/images/controller/controller.png" id="4_802nt"]
-[ext_resource type="Texture2D" uid="uid://btc7u1hhbf0ai" path="res://assets/images/controller/button_red_unpressed.png" id="5_xrr70"]
-[ext_resource type="Texture2D" uid="uid://dquo4srgbcphi" path="res://assets/images/controller/button_green_unpressed.png" id="6_oljjq"]
-[ext_resource type="Texture2D" uid="uid://lsb4hks2k5ix" path="res://assets/images/controller/hand.png" id="7_nrjcl"]
+[ext_resource type="PackedScene" uid="uid://c2rlmy6nlcnfg" path="res://scenes/components/controller/controller.tscn" id="4_dmcxv"]
 
 [node name="GameView" type="Node2D" unique_id=1597344507]
 script = ExtResource("1_vhh0i")
@@ -33,36 +30,8 @@ offset_top = 141.0
 offset_right = 8.0
 offset_bottom = 141.0
 
-[node name="ControllerControl" type="Control" parent="." unique_id=2024282170]
-layout_mode = 3
-anchors_preset = 0
+[node name="Controller" parent="." unique_id=644758906 instance=ExtResource("4_dmcxv")]
 offset_left = 231.0
 offset_top = 100.0
-offset_right = 271.0
-offset_bottom = 140.0
-
-[node name="ControllerTextureRect" type="TextureRect" parent="ControllerControl" unique_id=1348698482]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("4_802nt")
-
-[node name="ButtonRedTextureRect" type="TextureRect" parent="ControllerControl" unique_id=94231424]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("5_xrr70")
-
-[node name="ButtonGreenTextureRect" type="TextureRect" parent="ControllerControl" unique_id=1233246240]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("6_oljjq")
-
-[node name="TextureRect" type="TextureRect" parent="ControllerControl" unique_id=644772242]
-layout_mode = 0
-offset_left = 33.0
-offset_top = 46.0
-offset_right = 113.0
-offset_bottom = 126.0
-texture = ExtResource("7_nrjcl")
+offset_right = 231.0
+offset_bottom = 100.0

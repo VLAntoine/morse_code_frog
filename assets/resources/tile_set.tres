@@ -2,37 +2,42 @@
 
 [ext_resource type="Texture2D" uid="uid://bff68xwo106qf" path="res://assets/images/tiles/tiles_atlas.png" id="1_ga4hc"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_swumt"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ga4hc"]
 texture = ExtResource("1_ga4hc")
 0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, -6, -6, 6, 6, 6, 6, -6)
 0:0/0/custom_data_2 = true
+0:0/0/custom_data_4 = true
 1:0/0 = 0
-1:0/0/custom_data_3 = true
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, -6, -6, 6, 6, 6, 6, -6)
+1:0/0/custom_data_2 = true
 2:0/0 = 0
 2:0/0/custom_data_3 = true
 3:0/0 = 0
 3:0/0/custom_data_3 = true
 4:0/0 = 0
-4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, -6, -6, 6, 6, 6, 6, -6)
-4:0/0/custom_data_2 = true
+4:0/0/custom_data_3 = true
 5:0/0 = 0
 5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, -6, -6, 6, 6, 6, 6, -6)
 5:0/0/custom_data_2 = true
 6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, -6, -6, 6, 6, 6, 6, -6)
+6:0/0/custom_data_2 = true
 7:0/0 = 0
-7:0/0/custom_data_1 = true
 8:0/0 = 0
-8:0/0/custom_data_0 = true
+8:0/0/custom_data_1 = true
 9:0/0 = 0
-9:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, -6, 6, -6, 6, 6, -6, 6)
-9:0/0/custom_data_2 = true
+9:0/0/custom_data_0 = true
 10:0/0 = 0
 10:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, -6, 6, -6, 6, 6, -6, 6)
 10:0/0/custom_data_2 = true
 11:0/0 = 0
-11:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, -6, -6, 6, 6, 6, 6, -6)
+11:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, -6, 6, -6, 6, 6, -6, 6)
 11:0/0/custom_data_2 = true
+12:0/0 = 0
+12:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, -6, -6, 6, 6, 6, 6, -6)
+12:0/0/custom_data_2 = true
+13:0/0 = 0
+13:0/0/custom_data_2 = true
 
 [resource]
 physics_layer_0/collision_layer = 1
@@ -45,5 +50,7 @@ custom_data_layer_2/name = "wall"
 custom_data_layer_2/type = 1
 custom_data_layer_3/name = "hole"
 custom_data_layer_3/type = 1
-sources/1 = SubResource("TileSetAtlasSource_swumt")
-tile_proxies/coords_level = [[0, Vector2i(0, 0)], [1, Vector2i(0, 0)], [1, Vector2i(0, 0)], [7, Vector2i(1, 0)], [2, Vector2i(0, 0)], [7, Vector2i(2, 0)], [3, Vector2i(0, 0)], [7, Vector2i(3, 0)], [4, Vector2i(0, 0)], [7, Vector2i(4, 0)], [5, Vector2i(0, 0)], [7, Vector2i(5, 0)], [5, Vector2i(1, 0)], [7, Vector2i(6, 0)], [5, Vector2i(2, 0)], [7, Vector2i(7, 0)], [5, Vector2i(3, 0)], [7, Vector2i(8, 0)], [5, Vector2i(4, 0)], [7, Vector2i(9, 0)], [6, Vector2i(0, 0)], [7, Vector2i(10, 0)], [7, Vector2i(0, 0)], [1, Vector2i(1, 0)], [7, Vector2i(1, 0)], [1, Vector2i(2, 0)], [7, Vector2i(2, 0)], [1, Vector2i(3, 0)], [7, Vector2i(3, 0)], [1, Vector2i(4, 0)], [7, Vector2i(4, 0)], [1, Vector2i(5, 0)], [7, Vector2i(5, 0)], [1, Vector2i(6, 0)], [7, Vector2i(6, 0)], [1, Vector2i(7, 0)], [7, Vector2i(7, 0)], [1, Vector2i(8, 0)], [7, Vector2i(8, 0)], [1, Vector2i(9, 0)], [7, Vector2i(9, 0)], [1, Vector2i(10, 0)], [7, Vector2i(10, 0)], [1, Vector2i(11, 0)]]
+custom_data_layer_4/name = "to_open"
+custom_data_layer_4/type = 1
+sources/3 = SubResource("TileSetAtlasSource_ga4hc")
+tile_proxies/coords_level = [[0, Vector2i(0, 0)], [3, Vector2i(0, 0)], [1, Vector2i(0, 0)], [3, Vector2i(1, 0)], [1, Vector2i(1, 0)], [3, Vector2i(2, 0)], [1, Vector2i(2, 0)], [3, Vector2i(3, 0)], [1, Vector2i(3, 0)], [3, Vector2i(4, 0)], [1, Vector2i(4, 0)], [3, Vector2i(5, 0)], [1, Vector2i(5, 0)], [3, Vector2i(6, 0)], [1, Vector2i(6, 0)], [3, Vector2i(7, 0)], [1, Vector2i(7, 0)], [3, Vector2i(8, 0)], [1, Vector2i(8, 0)], [3, Vector2i(9, 0)], [1, Vector2i(9, 0)], [3, Vector2i(10, 0)], [1, Vector2i(10, 0)], [3, Vector2i(11, 0)], [1, Vector2i(11, 0)], [3, Vector2i(12, 0)], [2, Vector2i(0, 0)], [3, Vector2i(13, 0)], [3, Vector2i(0, 0)], [7, Vector2i(3, 0)], [4, Vector2i(0, 0)], [7, Vector2i(4, 0)], [5, Vector2i(0, 0)], [7, Vector2i(5, 0)], [5, Vector2i(1, 0)], [7, Vector2i(6, 0)], [5, Vector2i(2, 0)], [7, Vector2i(7, 0)], [5, Vector2i(3, 0)], [7, Vector2i(8, 0)], [5, Vector2i(4, 0)], [7, Vector2i(9, 0)], [6, Vector2i(0, 0)], [7, Vector2i(10, 0)], [7, Vector2i(0, 0)], [1, Vector2i(1, 0)], [7, Vector2i(1, 0)], [1, Vector2i(2, 0)], [7, Vector2i(2, 0)], [1, Vector2i(3, 0)], [7, Vector2i(3, 0)], [1, Vector2i(4, 0)], [7, Vector2i(4, 0)], [1, Vector2i(5, 0)], [7, Vector2i(5, 0)], [1, Vector2i(6, 0)], [7, Vector2i(6, 0)], [1, Vector2i(7, 0)], [7, Vector2i(7, 0)], [1, Vector2i(8, 0)], [7, Vector2i(8, 0)], [1, Vector2i(9, 0)], [7, Vector2i(9, 0)], [1, Vector2i(10, 0)], [7, Vector2i(10, 0)], [1, Vector2i(11, 0)]]

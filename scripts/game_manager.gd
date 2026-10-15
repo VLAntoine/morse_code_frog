@@ -4,6 +4,7 @@ signal player_move_succeeded
 signal player_move_failed
 signal player_fallen
 signal player_initialized
+signal chest_opened
 signal level_won
 
 const INPUT_ENUM = USignalData.InputValue
@@ -12,6 +13,7 @@ var ultrasound_data: UltrasoundData
 
 var start_cell: Vector2i
 var goal_cell: Vector2i
+var chest_cell: Vector2i
 var walls_cell: Array[Vector2i]
 var holes_cell: Array[Vector2i]
 
@@ -34,6 +36,9 @@ func init_player_position():
 
 func set_goal_cell(cell: Vector2i):
 	goal_cell = cell
+
+func set_chest_cell(cell: Vector2i):
+	chest_cell = cell
 
 func add_walls_cell(cell: Vector2i):
 	walls_cell.append(cell)
@@ -72,6 +77,8 @@ func emit_move(move: Vector2i) -> void:
 	if move.length() < 2:
 		if next_pos in walls_cell:
 			player_move_failed.emit(next_pos)
+			if next_pos == chest_cell:
+				chest_opened.emit(next_pos)
 		elif next_pos in holes_cell:
 			player_fallen.emit(next_pos)
 		else:
@@ -85,9 +92,13 @@ func emit_move(move: Vector2i) -> void:
 		var mid_pos := player_position + move/2
 		if mid_pos in walls_cell:
 			player_move_failed.emit(next_pos)
+			if mid_pos == chest_cell:
+				chest_opened.emit(mid_pos)
 		elif next_pos in walls_cell:
 			player_position = mid_pos
 			player_move_failed.emit(next_pos)
+			if next_pos == chest_cell:
+				chest_opened.emit(next_pos)
 			if mid_pos in holes_cell:
 				player_fallen.emit(mid_pos)
 		elif next_pos in holes_cell:

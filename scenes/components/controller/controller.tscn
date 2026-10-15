@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://c2rlmy6nlcnfg"]
+
+[ext_resource type="Script" uid="uid://b0xkbv00vga0r" path="res://scenes/components/controller/controller.gd" id="1_pea4s"]
+[ext_resource type="Texture2D" uid="uid://infmpogy4cse" path="res://assets/images/controller/controller.png" id="2_eaptb"]
+[ext_resource type="Texture2D" uid="uid://btc7u1hhbf0ai" path="res://assets/images/controller/button_red_unpressed.png" id="3_es4e2"]
+[ext_resource type="Texture2D" uid="uid://dquo4srgbcphi" path="res://assets/images/controller/button_green_unpressed.png" id="4_wut5b"]
+[ext_resource type="Texture2D" uid="uid://lsb4hks2k5ix" path="res://assets/images/controller/hand.png" id="5_cydni"]
+
+[node name="Controller" type="Control" unique_id=644758906]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_pea4s")
+
+[node name="ControllerTextureRect" type="TextureRect" parent="." unique_id=625551097]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_eaptb")
+
+[node name="ButtonRedTextureRect" type="TextureRect" parent="." unique_id=1541774460]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_es4e2")
+
+[node name="ButtonGreenTextureRect" type="TextureRect" parent="." unique_id=24917444]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("4_wut5b")
+
+[node name="RightHandTextureRect" type="TextureRect" parent="." unique_id=441038113]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 45.0
+offset_right = 126.0
+offset_bottom = 125.0
+texture = ExtResource("5_cydni")
+
+[node name="LeftHandTextureRect" type="TextureRect" parent="." unique_id=739192762]
+layout_mode = 0
+offset_left = -44.0
+offset_top = 45.0
+offset_right = 36.0
+offset_bottom = 125.0
+texture = ExtResource("5_cydni")
+flip_h = true

@@ -16,12 +16,16 @@ func _ready() -> void:
 
 func setup(us_data: UltrasoundData) -> void:
 	ultrasound_data = us_data
+	ultrasound_data.new_signal_added.connect(_on_new_signal_added)
 	
 	for usignal_data in ultrasound_data.usignals_data:
-		var us_node = usignal_scene.instantiate()
-		u_signal_control.add_child(us_node)
-		us_node.setup(usignal_data)
-		us_node.end_oscilloscope_reached.connect(_on_end_oscilloscope_reached)
+		add_new_signal(usignal_data)
+
+func add_new_signal(usig_d: USignalData) -> void:
+	var us_node = usignal_scene.instantiate()
+	u_signal_control.add_child(us_node)
+	us_node.setup(usig_d)
+	us_node.end_oscilloscope_reached.connect(_on_end_oscilloscope_reached)
 
 func _process(delta: float) -> void:
 	for i in u_signal_control.get_child_count():
@@ -49,3 +53,6 @@ func start_off_timer() -> void:
 
 func _on_off_timer_timeout() -> void:
 	ultrasound_data.clear_signals()
+
+func _on_new_signal_added() -> void:
+	add_new_signal(ultrasound_data.usignals_data[-1])

@@ -92,7 +92,15 @@ func fall() -> void:
 	await tween.finished
 
 func init_player() -> void:
+	animated_sprite.scale = Vector2(0,0)
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(animated_sprite,"scale",Vector2(1,1),INIT_DURATION)
+	await tween.finished
+
+func player_win() -> void:
+	animated_sprite.scale = Vector2(1,1)
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_BOUNCE)
+	tween.tween_property(animated_sprite,"scale",Vector2(1.5,1.5),INIT_DURATION)
 	await tween.finished

@@ -1,13 +1,21 @@
 extends Node2D
 
+const SHUTTER_UP_POS_Y := -120.0
+const SHUTTER_DOWN_POS_Y := 8.0
+
 @onready var player_character = $PlayScreenControl/PlayerCharacter
 @onready var level_control: Control = $PlayScreenControl/LevelControl
 @onready var ultrasound = $Ultrasound
 @onready var controller = $Controller
+@onready var roller_shutter = $RollerShutterTextureRect
 
 var levels_scenes: Array[Resource] = [
+	preload("res://scenes/components/levels/level_test.tscn"),
 	preload("res://scenes/components/levels/level_1.tscn"),
-	preload("res://scenes/components/levels/level_2.tscn")
+	preload("res://scenes/components/levels/level_2.tscn"),
+	preload("res://scenes/components/levels/level_3.tscn"),
+	preload("res://scenes/components/levels/level_4.tscn"),
+	preload("res://scenes/components/levels/level_5.tscn")
 ]
 
 var current_level_index := -1
@@ -15,6 +23,7 @@ var current_level_index := -1
 func _ready() -> void:
 	GameManager.level_won.connect(_on_level_won)
 	GameManager.chest_opened.connect(_on_chest_opened)
+	roller_shutter.position.y = SHUTTER_DOWN_POS_Y
 	player_character.setup()
 	ultrasound.setup(GameManager.ultrasound_data)
 	controller.setup(GameManager.ultrasound_data)
@@ -30,6 +39,8 @@ func next_level() -> void:
 	var new_level = levels_scenes[current_level_index].instantiate()
 	level_control.add_child(new_level)
 	set_game_manager_map_data(new_level)
+	await roller_shutter_up()
+	await player_character.init_player()
 
 func set_game_manager_map_data(level: TileMapLayer) -> void:
 	var cells = level.get_used_cells()
@@ -46,8 +57,35 @@ func set_game_manager_map_data(level: TileMapLayer) -> void:
 			GameManager.add_holes_cell(c)
 
 func _on_level_won() -> void:
+	await player_character.player_win()
+	await roller_shutter_down()
 	next_level()
 
 func _on_chest_opened(cell: Vector2i) -> void:
 	var level: TileMapLayer = level_control.get_child(0)
 	level.set_cell(cell,3,Vector2i(13,0))
+
+func roller_shutter_down() -> void:
+	roller_shutter.position.y = SHUTTER_UP_POS_Y
+	var tween := create_tween()
+	tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(roller_shutter,"position:y",SHUTTER_DOWN_POS_Y,0.5)
+	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(roller_shutter,"position:y",SHUTTER_DOWN_POS_Y-16,0.2)
+	tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(roller_shutter,"position:y",SHUTTER_DOWN_POS_Y,0.2)
+	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(roller_shutter,"position:y",SHUTTER_DOWN_POS_Y-4,0.1)
+	tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(roller_shutter,"position:y",SHUTTER_DOWN_POS_Y,0.1)
+	tween.tween_interval(1.0)
+	await tween.finished
+
+func roller_shutter_up() -> void:
+	roller_shutter.position.y = SHUTTER_DOWN_POS_Y
+	var tween := create_tween()
+	tween.tween_interval(0.5)
+	tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(roller_shutter,"position:y",SHUTTER_UP_POS_Y,1.0)
+	await tween.finished
+	

@@ -4,6 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://b3246q6xinb25" path="res://scenes/components/player_character/player_character.tscn" id="2_dmcxv"]
 [ext_resource type="PackedScene" uid="uid://dpsauo23m4m24" path="res://scenes/components/ultrasound/ultrasound.tscn" id="3_dmcxv"]
 [ext_resource type="PackedScene" uid="uid://c2rlmy6nlcnfg" path="res://scenes/components/controller/controller.tscn" id="4_dmcxv"]
+[ext_resource type="Texture2D" uid="uid://4eudm6nbx04f" path="res://assets/images/miscellaneaous/white_board.png" id="5_ng05d"]
+[ext_resource type="Texture2D" uid="uid://bbo2kdbm4oayx" path="res://assets/images/miscellaneaous/roller_shutter.png" id="6_v4vw6"]
+[ext_resource type="Texture2D" uid="uid://c2r4opbvleiu8" path="res://assets/images/miscellaneaous/shutter_frame.png" id="7_802nt"]
 
 [node name="GameView" type="Node2D" unique_id=1597344507]
 script = ExtResource("1_vhh0i")
@@ -35,3 +38,22 @@ offset_left = 231.0
 offset_top = 100.0
 offset_right = 231.0
 offset_bottom = 100.0
+
+[node name="WhiteBoardTextureRect" type="TextureRect" parent="." unique_id=1086485610]
+offset_left = 231.0
+offset_top = 8.0
+offset_right = 311.0
+offset_bottom = 88.0
+texture = ExtResource("5_ng05d")
+
+[node name="RollerShutterTextureRect" type="TextureRect" parent="." unique_id=865693707]
+offset_left = 8.0
+offset_top = -120.0
+offset_right = 216.0
+offset_bottom = 8.0
+texture = ExtResource("6_v4vw6")
+
+[node name="ShutterFrameTextureRect" type="TextureRect" parent="." unique_id=21037867]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("7_802nt")

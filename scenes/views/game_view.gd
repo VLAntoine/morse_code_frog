@@ -39,8 +39,10 @@ func next_level() -> void:
 	var new_level = levels_scenes[current_level_index].instantiate()
 	level_control.add_child(new_level)
 	set_game_manager_map_data(new_level)
+	player_character.animated_sprite.scale = Vector2(1,1)
 	await roller_shutter_up()
-	await player_character.init_player()
+	await player_character.first_player_init()
+	ultrasound.disabled = false
 
 func set_game_manager_map_data(level: TileMapLayer) -> void:
 	var cells = level.get_used_cells()
@@ -57,9 +59,10 @@ func set_game_manager_map_data(level: TileMapLayer) -> void:
 			GameManager.add_holes_cell(c)
 
 func _on_level_won() -> void:
+	ultrasound.disabled = true
 	await player_character.player_win()
 	await roller_shutter_down()
-	next_level()
+	await next_level()
 
 func _on_chest_opened(cell: Vector2i) -> void:
 	var level: TileMapLayer = level_control.get_child(0)

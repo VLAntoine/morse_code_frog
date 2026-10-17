@@ -61,11 +61,12 @@ func _on_player_fallen(next_pos: Vector2i) -> void:
 	await fall()
 	GameManager.init_player_position()
 	
-func _on_player_initialized() -> void:
+func _on_player_initialized(with_animation: bool) -> void:
 	animated_sprite.flip_h = GameManager.player_flip
 	set_player_position()
 	animated_sprite.rotation_degrees = 0
-	await init_player()
+	if with_animation:
+		await init_player()
 	
 func move(next_position: Vector2) -> void:
 	var tween = create_tween()
@@ -96,6 +97,14 @@ func init_player() -> void:
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(animated_sprite,"scale",Vector2(1,1),INIT_DURATION)
+	await tween.finished
+
+func first_player_init() -> void:
+	animated_sprite.scale = Vector2(1,1)
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(animated_sprite,"scale",Vector2(1.3,1.3),INIT_DURATION/6)
+	tween.tween_property(animated_sprite,"scale",Vector2(1,1),INIT_DURATION/6)
 	await tween.finished
 
 func player_win() -> void:

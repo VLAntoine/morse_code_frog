@@ -27,12 +27,12 @@ func _ready() -> void:
 
 func set_player_init_position(cell: Vector2i):
 	start_cell = cell
-	init_player_position()
+	init_player_position(false)
 	
-func init_player_position():
+func init_player_position(with_animation: bool = true):
 	player_flip = false
 	player_position = start_cell
-	player_initialized.emit()
+	player_initialized.emit(with_animation)
 
 func set_goal_cell(cell: Vector2i):
 	goal_cell = cell

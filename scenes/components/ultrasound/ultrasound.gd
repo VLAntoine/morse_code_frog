@@ -9,6 +9,8 @@ const OFF_DURATION := 0.2
 
 var ultrasound_data: UltrasoundData
 
+var disabled:= true
+
 func _ready() -> void:
 	off_timer.wait_time = OFF_DURATION
 	off_timer.one_shot = true
@@ -30,12 +32,12 @@ func add_new_signal(usig_d: USignalData) -> void:
 func _process(delta: float) -> void:
 	for i in u_signal_control.get_child_count():
 		var action_name := "start_wave_%s" % [str(i + 1)]
-		if Input.is_action_just_pressed(action_name):
+		if Input.is_action_just_pressed(action_name) && !disabled:
 			off_timer.stop()
 			ultrasound_data.start_wave(i)
-		elif Input.is_action_pressed(action_name) && ultrasound_data.usignals_data[i].running:
+		elif Input.is_action_pressed(action_name) && ultrasound_data.usignals_data[i].running && !disabled:
 			ultrasound_data.update_last_wave(i, delta)
-		elif Input.is_action_just_released(action_name):
+		elif Input.is_action_just_released(action_name) && !disabled:
 			ultrasound_data.stop_wave(i)
 			start_off_timer()
 

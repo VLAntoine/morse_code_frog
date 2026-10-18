@@ -18,7 +18,7 @@ const SHUTTER_DOWN_POS_Y := 8.0
 
 
 var levels_scenes: Array[Resource] = [
-	preload("res://scenes/components/levels/level_test.tscn"),
+	#preload("res://scenes/components/levels/level_test.tscn"),
 	preload("res://scenes/components/levels/level_1.tscn"),
 	preload("res://scenes/components/levels/level_2.tscn"),
 	preload("res://scenes/components/levels/level_3.tscn"),

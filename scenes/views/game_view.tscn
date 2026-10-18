@@ -7,6 +7,38 @@
 [ext_resource type="Texture2D" uid="uid://4eudm6nbx04f" path="res://assets/images/miscellaneaous/white_board.png" id="5_ng05d"]
 [ext_resource type="Texture2D" uid="uid://bbo2kdbm4oayx" path="res://assets/images/miscellaneaous/roller_shutter.png" id="6_v4vw6"]
 [ext_resource type="Texture2D" uid="uid://c2r4opbvleiu8" path="res://assets/images/miscellaneaous/shutter_frame.png" id="7_802nt"]
+[ext_resource type="Texture2D" uid="uid://dhid6f80uxhee" path="res://assets/images/miscellaneaous/new_button_pressed.png" id="8_oljjq"]
+[ext_resource type="Texture2D" uid="uid://bd3x20plrwblb" path="res://assets/images/miscellaneaous/new_button_unpressed.png" id="9_nrjcl"]
+[ext_resource type="Texture2D" uid="uid://bm67nbtdil83n" path="res://assets/images/miscellaneaous/win1.png" id="10_dcehp"]
+[ext_resource type="Texture2D" uid="uid://cc1yjmeepjnj3" path="res://assets/images/miscellaneaous/win2.png" id="11_7xu1k"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g0gwt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_oljjq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_nrjcl")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h24yo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_dcehp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_7xu1k")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="GameView" type="Node2D" unique_id=1597344507]
 script = ExtResource("1_vhh0i")
@@ -57,3 +89,11 @@ texture = ExtResource("6_v4vw6")
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("7_802nt")
+
+[node name="NewButtonSprite" type="AnimatedSprite2D" parent="." unique_id=1734859806]
+position = Vector2(113, 72)
+sprite_frames = SubResource("SpriteFrames_g0gwt")
+
+[node name="WinSprite" type="AnimatedSprite2D" parent="." unique_id=1799998544]
+position = Vector2(112, 71)
+sprite_frames = SubResource("SpriteFrames_h24yo")

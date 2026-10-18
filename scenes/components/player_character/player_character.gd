@@ -11,6 +11,13 @@ const INIT_DURATION := 2.0
 
 @onready var animated_sprite = $AnimatedSprite2D
 
+@onready var jump_audio = $JumpAudioStreamPlayer
+@onready var fall_audio = $FallAudioStreamPlayer
+@onready var wall_audio = $WallAudioStreamPlayer
+@onready var win_audio = $WinAudioStreamPlayer
+@onready var rebirth_audio = $RebirthAudioStreamPlayer
+@onready var first_init_audio = $FirstInitAudioStreamPlayer
+
 var state:= PlayerState.IDLE
 
 func setup():
@@ -55,6 +62,7 @@ func _on_player_move_failed(next_cell: Vector2i) -> void:
 	set_state(PlayerState.IDLE)
 
 func _on_player_fallen(next_pos: Vector2i) -> void:
+	fall_audio.play()
 	set_state(PlayerState.JUMP)
 	await move(get_global_cell_position(next_pos))
 	set_state(PlayerState.IDLE)
@@ -69,6 +77,7 @@ func _on_player_initialized(with_animation: bool) -> void:
 		await init_player()
 	
 func move(next_position: Vector2) -> void:
+	jump_audio.play()
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 	tween.tween_property(self,"position",next_position,JUMP_DURATION)
@@ -78,6 +87,7 @@ func fail(next_pos: Vector2) -> void:
 	var player_pos := get_global_cell_position(GameManager.player_position)
 	var mid_pos := (next_pos + player_pos) / 2
 	
+	wall_audio.play()
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 	tween.tween_property(self,"position",mid_pos,JUMP_DURATION/2)
@@ -90,10 +100,12 @@ func fall() -> void:
 	tween.set_parallel()
 	tween.tween_property(animated_sprite,"rotation_degrees",360,FALL_DURATION)
 	tween.tween_property(animated_sprite,"scale",Vector2(0,0),FALL_DURATION)
+	tween.tween_interval(1.5)
 	await tween.finished
 
 func init_player() -> void:
 	animated_sprite.scale = Vector2(0,0)
+	rebirth_audio.play()
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(animated_sprite,"scale",Vector2(1,1),INIT_DURATION)
@@ -101,6 +113,7 @@ func init_player() -> void:
 
 func first_player_init() -> void:
 	animated_sprite.scale = Vector2(1,1)
+	first_init_audio.play()
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(animated_sprite,"scale",Vector2(1.3,1.3),INIT_DURATION/6)
@@ -109,6 +122,7 @@ func first_player_init() -> void:
 
 func player_win() -> void:
 	animated_sprite.scale = Vector2(1,1)
+	win_audio.play()
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_BOUNCE)
 	tween.tween_property(animated_sprite,"scale",Vector2(1.5,1.5),INIT_DURATION)

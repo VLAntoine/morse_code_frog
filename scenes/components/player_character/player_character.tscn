@@ -4,6 +4,12 @@
 [ext_resource type="Script" uid="uid://da1h4jnbpevnt" path="res://scenes/components/player_character/player_character.gd" id="1_buyix"]
 [ext_resource type="Texture2D" uid="uid://b3sc5q0b1sa6p" path="res://assets/images/frog/frog_idle_2.png" id="2_buyix"]
 [ext_resource type="Texture2D" uid="uid://cn54in8avi8w5" path="res://assets/images/frog/frog_jump1.png" id="3_asoth"]
+[ext_resource type="AudioStream" uid="uid://b3ik62x5uqy0s" path="res://assets/sounds/jump.mp3" id="5_asoth"]
+[ext_resource type="AudioStream" uid="uid://dcj8oei2sc4ee" path="res://assets/sounds/fall.mp3" id="6_iyaqb"]
+[ext_resource type="AudioStream" uid="uid://560b72oujrfk" path="res://assets/sounds/wall.mp3" id="7_skou8"]
+[ext_resource type="AudioStream" uid="uid://ceogc5qhw0rm3" path="res://assets/sounds/win.mp3" id="8_sbatt"]
+[ext_resource type="AudioStream" uid="uid://252d18ehun3" path="res://assets/sounds/rebirth.mp3" id="9_pumq3"]
+[ext_resource type="AudioStream" uid="uid://dwbx1sqmie3r6" path="res://assets/sounds/first_init.mp3" id="10_kd6h7"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g0gwt"]
 animations = [{
@@ -40,3 +46,22 @@ animation = &"idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=465660681]
 position = Vector2(0, 7.5)
 shape = SubResource("RectangleShape2D_h24yo")
+
+[node name="JumpAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=750879384]
+stream = ExtResource("5_asoth")
+pitch_scale = 1.5
+
+[node name="FallAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1161715763]
+stream = ExtResource("6_iyaqb")
+
+[node name="WallAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=293881224]
+stream = ExtResource("7_skou8")
+
+[node name="WinAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1338475838]
+stream = ExtResource("8_sbatt")
+
+[node name="RebirthAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1478810558]
+stream = ExtResource("9_pumq3")
+
+[node name="FirstInitAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=979842073]
+stream = ExtResource("10_kd6h7")

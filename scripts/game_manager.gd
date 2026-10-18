@@ -79,6 +79,7 @@ func emit_move(move: Vector2i) -> void:
 			player_move_failed.emit(next_pos)
 			if next_pos == chest_cell:
 				chest_opened.emit(next_pos)
+				chest_cell = Vector2i(-1,-1)
 		elif next_pos in holes_cell:
 			player_fallen.emit(next_pos)
 		else:

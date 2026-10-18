@@ -11,6 +11,10 @@
 [ext_resource type="Texture2D" uid="uid://bd3x20plrwblb" path="res://assets/images/miscellaneaous/new_button_unpressed.png" id="9_nrjcl"]
 [ext_resource type="Texture2D" uid="uid://bm67nbtdil83n" path="res://assets/images/miscellaneaous/win1.png" id="10_dcehp"]
 [ext_resource type="Texture2D" uid="uid://cc1yjmeepjnj3" path="res://assets/images/miscellaneaous/win2.png" id="11_7xu1k"]
+[ext_resource type="AudioStream" uid="uid://bhlfc11cu2h0x" path="res://assets/sounds/chest.mp3" id="12_7xu1k"]
+[ext_resource type="AudioStream" uid="uid://cqae74i0qv310" path="res://assets/sounds/shutter_close.mp3" id="12_64o4x"]
+[ext_resource type="AudioStream" uid="uid://bv8wdmhflvdry" path="res://assets/sounds/main_theme.mp3" id="14_o8yjf"]
+[ext_resource type="AudioStream" uid="uid://dh0o8uyqxsy0k" path="res://assets/sounds/shutter_open.wav" id="15_oypt5"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g0gwt"]
 animations = [{
@@ -42,6 +46,11 @@ animations = [{
 
 [node name="GameView" type="Node2D" unique_id=1597344507]
 script = ExtResource("1_vhh0i")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=42463608]
+offset_right = 320.0
+offset_bottom = 180.0
+color = Color(0.84123003, 0.8338556, 0.8216671, 1)
 
 [node name="PlayScreenControl" type="Control" parent="." unique_id=52525726]
 layout_mode = 3
@@ -97,3 +106,16 @@ sprite_frames = SubResource("SpriteFrames_g0gwt")
 [node name="WinSprite" type="AnimatedSprite2D" parent="." unique_id=1799998544]
 position = Vector2(112, 71)
 sprite_frames = SubResource("SpriteFrames_h24yo")
+
+[node name="ShutterDownAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=450477698]
+stream = ExtResource("12_64o4x")
+
+[node name="ChestAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=159401074]
+stream = ExtResource("12_7xu1k")
+
+[node name="MainThemeAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=966655858]
+stream = ExtResource("14_o8yjf")
+parameters/looping = true
+
+[node name="ShutterOpenAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=67683846]
+stream = ExtResource("15_oypt5")

@@ -11,6 +11,12 @@ const SHUTTER_DOWN_POS_Y := 8.0
 @onready var new_button_sprite = $NewButtonSprite
 @onready var win_sprite = $WinSprite
 
+@onready var chest_audio = $ChestAudioStreamPlayer
+@onready var shutter_down = $ShutterDownAudioStreamPlayer
+@onready var main_audio = $MainThemeAudioStreamPlayer
+@onready var shutter_open_audio = $ShutterOpenAudioStreamPlayer
+
+
 var levels_scenes: Array[Resource] = [
 	preload("res://scenes/components/levels/level_test.tscn"),
 	preload("res://scenes/components/levels/level_1.tscn"),
@@ -28,6 +34,8 @@ func _ready() -> void:
 	
 	win_sprite.visible = false
 	win_sprite.stop()
+	
+	main_audio.play()
 	
 	GameManager.level_won.connect(_on_level_won)
 	GameManager.chest_opened.connect(_on_chest_opened)
@@ -78,6 +86,7 @@ func _on_level_won() -> void:
 
 func _on_chest_opened(cell: Vector2i) -> void:
 	ultrasound.disabled = true
+	chest_audio.play()
 	var level: TileMapLayer = level_control.get_child(0)
 	level.set_cell(cell,3,Vector2i(13,0))
 	await new_button_owned()
@@ -85,6 +94,7 @@ func _on_chest_opened(cell: Vector2i) -> void:
 
 func roller_shutter_down() -> void:
 	roller_shutter.position.y = SHUTTER_UP_POS_Y
+	shutter_down.play()
 	var tween := create_tween()
 	tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
 	tween.tween_property(roller_shutter,"position:y",SHUTTER_DOWN_POS_Y,0.5)
@@ -101,6 +111,7 @@ func roller_shutter_down() -> void:
 
 func roller_shutter_up() -> void:
 	roller_shutter.position.y = SHUTTER_DOWN_POS_Y
+	shutter_open_audio.play()
 	var tween := create_tween()
 	tween.tween_interval(0.5)
 	tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
